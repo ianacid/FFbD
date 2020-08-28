@@ -57,18 +57,20 @@ screenDelimiter = "-------------------------------------------------------------
 screenDelimiterBig = "==========================================================================================="
 screenDelimiterErr = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
+# Variables de fonctionnement
+
 title = screenDelimiterBig +"\n"+ figlet +".py (Find Files by Dates)\n\nVersion: "+ version +", Date: "+ releaseDate +"\nAuthor: "+ author +"\n\n"+ screenDelimiterBig
 
-t0 = dt.datetime.utcfromtimestamp(0)
 path = "."
+t0 = dt.datetime.utcfromtimestamp(0)
 startdate = int(convertDate2Time(dt.datetime.now().strftime("%d-%m-%Y"), False))
 enddate = int(convertDate2Time(dt.datetime.now().strftime("%d-%m-%Y"), True))
 index = -1
 datePattern = "(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-([12]\d{3})"
-
 filter = []
 
 # Rafraichi le terminal
+
 os.system('cls' if os.name == 'nt' else 'clear')
 
 # -------------------
