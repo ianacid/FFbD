@@ -13,7 +13,7 @@ def usage():
 		"\nUsage:\n>> FFbD.py -p \"<path>\" -s <startdate (dd-mm-yyyy)> -e <enddate (dd-mm-yyyy)> -f <extensions (comma separated)> [-m]\n" + \
 		">> FFbD.py --path \"<path>\" --start <startdate (dd-mm-yyyy)> --end <enddate (dd-mm-yyyy)> --filter <extensions (comma separated)> [-m]\n" + \
 		"\nOptions:\n" + \
-		"\t[required] -p or --path \t<path of the directory to be analysed in inverted commas>\n" + \
+		"\t[required] -p or --path \t<path of the directory to be analysed between quotes>\n" + \
 		"\t[optional] -s or --start \t<search start date> (dd-mm-yyyy), if missing = today's date\n" + \
 		"\t[optional] -e or --end \t\t<search end date> (dd-mm-yyyy), if missing = today's date\n" + \
 		"\t[optional] -f or --filter \t<File extensions> (comma-separated)\n" + \
