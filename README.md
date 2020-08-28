@@ -2,7 +2,7 @@
 
 ---------------------------------------------------------
 
-FFbD.py (Find Files by Dates) v0.1
+FFbD.py (Find Files by Dates) v0.2
 Auteur: Yann MANET <yann.manet@unige.ch>
 
 ---------------------------------------------------------
