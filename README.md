@@ -15,7 +15,7 @@ University of Geneva - Switzerland
 
 
 ## Options:
-	* [required] -p or --path	<path of the directory to be analysed in inverted commas>
+	* [required] -p or --path	<path of the directory to be analysed between quotes>
 	* [optional] -s or --start	<search start date> (dd-mm-yyyy), if missing = today's date
 	* [optional] -e or --end	<search end date> (dd-mm-yyyy), if missing = today's date
 	* [optional] -f or --filter	<File extensions> (comma-separated)
