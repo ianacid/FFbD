@@ -3,15 +3,18 @@
 ---------------------------------------------------------
 
 FFbD.py (Find Files by Dates) v0.2
-Auteur: Yann MANET <yann.manet@unige.ch>
+Author: Yann MANET <yann.manet@unige.ch>
 
 ---------------------------------------------------------
 
-Usage: FFbD.py -p <path> -s <startdate> -e <enddate> [-m]
+
+Usage:
+>> FFbD.py -p "<path>" -s <startdate (dd-mm-yyyy)> -e <enddate (dd-mm-yyyy)> -f <extensions (comma separated)> [-m]
+>> FFbD.py --path "<path>" --start <startdate (dd-mm-yyyy)> --end <enddate (dd-mm-yyyy)> --filter <extensions (comma separated)> [-m]
 
 Options:
-        
-        -p ou --path    <chemin du répertoire à analyser entre guillemets>
-        -s ou --start   <date de début de recherche> (format jj-mm-aaaa), si manquant = date du jour
-        -e ou --end     <date de fin de recherche> (format jj-mm-aaaa), si manquant = date du jour
-        -m  par défaut, la recherche est faite par date de création, en ajoutant l'option -m, la recherche sera faite par date de modification
+        [required] -p or --path         <path of the directory to be analysed in inverted commas>
+        [optional] -s or --start        <search start date> (dd-mm-yyyy), if missing = today's date
+        [optional] -e or --end          <search end date> (dd-mm-yyyy), if missing = today's date
+        [optional] -f or --filter       <File extensions> (comma-separated)
+        [optional] -m                    NB: by default, the search is done by creation date, by adding the [-m] option, the search will be done by modification date
