@@ -8,7 +8,7 @@ import datetime as dt
 def usage():
 	# Affichage de l'usage
 	# return void
-	
+
 	print(
 		"\nUsage:\n>> FFbD.py -p \"<path>\" -s <startdate (dd-mm-yyyy)> -e <enddate (dd-mm-yyyy)> -f <extensions (comma separated)> [-m]\n" + \
 		">> FFbD.py --path \"<path>\" --start <startdate (dd-mm-yyyy)> --end <enddate (dd-mm-yyyy)> --filter <extensions (comma separated)> [-m]\n" + \
@@ -19,25 +19,25 @@ def usage():
 		"\t[optional] -f or --filter \t<File extensions> (comma-separated)\n" + \
 		"\t[optional] -m \t\t\t NB: by default, the search is done by creation date, by adding the [-m] option, the search will be done by modification date\n\n"
 	)
-	
+
 	return
 
 def convertDate2Time(strDate, endDate):
 	# Converti une date en timestamp
 	# return timestamp
-	
+
 	if endDate == True:
 		time = (dt.datetime.strptime(strDate, "%d-%m-%Y") - t0).total_seconds() + 86340
-	
+
 	else:
 		time = (dt.datetime.strptime(strDate, "%d-%m-%Y") - t0).total_seconds()
-	
+
 	return time
 
 def convertTime2strDate(t):
 	# Converti un timestamp en date human-readable
 	# return human-readable datetime
-	
+
 	return dt.datetime.utcfromtimestamp(t).strftime('%d-%m-%Y %H:%M')
 
 # -------------------
@@ -46,14 +46,14 @@ def convertTime2strDate(t):
 
 # Informations variables
 
-version = "0.2"
-releaseDate = "28.08.2020"
+version = "0.3"
+releaseDate = "07.12.2020"
 author = "Yann MANET <yann.manet@unige.ch>\nUniversity of Geneva - Switzerland"
 
 # Display variables
 
 figlet = " ___  ___  _    ___\n| __>| __>| |_ | . \\\n| _> | _> | . \| | |\n|_|  |_|  |___/|___/"
-screenDelimiter = "----------------------------------------------------------------------------------------------\n"
+screenDelimiter = "----------------------------------------------------------------------------------------------"
 screenDelimiterBig = "==========================================================================================="
 screenDelimiterErr = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
@@ -67,6 +67,7 @@ startdate = int(convertDate2Time(dt.datetime.now().strftime("%d-%m-%Y"), False))
 enddate = int(convertDate2Time(dt.datetime.now().strftime("%d-%m-%Y"), True))
 index = -1
 datePattern = "(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-([12]\d{3})"
+cellPattern = "{:^20}|{:^20}|\t{:30}|\t{:50}"
 filter = []
 
 # Rafraichi le terminal
@@ -98,32 +99,32 @@ for opt, arg in opts:
 			exit(2)
 
 	elif opt in ("-s", "--start"):
-		
+
 		p = re.compile(datePattern)
-		
+
 		if str(p.match(arg)) == "None":
 			usage()
 			print(screenDelimiterErr + "\nError: Parameter ["+ opt +"]: Invalid date format\n" + screenDelimiterErr )
 			exit(2)
-		
+
 		startdate = int(convertDate2Time(arg, False))
 
 	elif opt in ("-e", "--end"):
 
 		p = re.compile(datePattern)
-		
+
 		if str(p.match(arg)) == "None":
 			usage()
 			print(screenDelimiterErr + "\nError: Parameter ["+ opt +"]: Invalid date format\n" + screenDelimiterErr )
 			exit(2)
-		
-		
+
+
 		enddate = int(convertDate2Time(arg, True))
-	
+
 	elif opt in ("-f", "--filter"):
-		
+
 		filter = arg.split(",")
-		
+
 	elif opt == "-m":
 		index = -2
 
@@ -135,7 +136,7 @@ for opt, arg in opts:
 print (title)
 
 # Affichage des informations de recherche
-print(	
+print(
 	">> List by file modification date" if index == -2 else ">> List by file creation date\n" + \
 	">>>> In: "+ path +"\n" + \
 	">>>> Between "+ convertTime2strDate(startdate) +" and "+ convertTime2strDate(enddate)
@@ -144,56 +145,64 @@ print(
 # Affichage si filtre activé
 if len(filter) > 0:
 	print (">>>> Filter on extension(s): "+ str(filter))
-	
+
 print (
 	">>>> List generated on " + dt.datetime.now().strftime("%d-%m-%Y %H:%M") +"\n" + \
-	screenDelimiter + \
-	screenDelimiter + \
-	"DATETIME [UTC]\t | \tFILENAME\t | \tPATH\n" + \
 	screenDelimiter
 )
+print(cellPattern.format("CREATION [UTC]", "MODIFICATION [UTC]", "FILENAME", "PATH"))
+print (screenDelimiter)
 
 # -------------------
 # RECHERCHES ET AFFICHAGE RESULTATS
 # -------------------
 
-# Parcours du répertoire 
+# Parcours du répertoire
 # et de ses sous-répertoires
 
 for (dirpath, dirnames, filenames) in os.walk(path):
-	
+
 	for filename in filenames:
-		
+
 		# Contrôle de l'OS
-		# le but est de recréer le path 
+		# le but est de recréer le path
 		# dans le cas de Windows le séparateur est \
 		# dans le cas d'Unix le séparateur est /
-		
+
 		if os.name == 'nt':
 			f = '\\'.join([dirpath,filename]) # Windows
 		else:
 			f = '/'.join([dirpath,filename]) # Unix
-			
+
 		ctime = os.stat(f)[index] # Récupération du timestamp du fichier
-		
+
 		extension = f.split(os.extsep)[-1] # Récupération de l'extension du fichier
-		
+
 		# Si la longueur de la liste filtre est inférieur à 1
 		# OU (donc si supérieur à 0), l'extension du fichier en cours
 		# se trouve dans la liste de filtre
-		
+
 		if len(filter) < 1 or extension in filter:
-			
+
 			if ctime>=startdate and ctime <=enddate:
-				
-				print (
-					convertTime2strDate(ctime) + "\t" + \
-					filename + "\t" + \
-					f
+
+				#print (
+				#	convertTime2strDate(ctime) + "\t|" + \
+				#	filename + "\t|" + \
+				#	f
+				#)
+				print(cellPattern.format(
+						convertTime2strDate(os.stat(f)[-1]),
+						convertTime2strDate(os.stat(f)[-2]),
+						filename,
+						f
+					)
 				)
-				
-			
+
+
 
 print (screenDelimiter)
+
+
 
 exit(0)
