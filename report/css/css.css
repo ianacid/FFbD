@@ -1,0 +1,9 @@
+body {
+    font-size: smaller;
+    padding:15px;
+}
+
+.logo {
+    width:200px;
+    margin-bottom:15px;
+}

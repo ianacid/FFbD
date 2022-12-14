@@ -1,0 +1,1 @@
+docker run --rm -e SONAR_HOST_URL="https://ispso-dev.unige.ch/sonarqube" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=Yann.Manet_ffbd_AYUKVkHyjuNyJIE-IoLr" -e SONAR_LOGIN="9f917cd8be0e7d371d1ea923537f1047272e2852" -v "/home/manetsu/SynologyDrive/UNIGE/FFbD:/usr/src" sonarsource/sonar-scanner-cli
